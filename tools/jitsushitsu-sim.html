@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>実質月額シミュレーター｜固定費ラボ</title>
+<meta name="description" content="光回線の月額・工事費・割引・キャッシュバック・解約金から、契約期間の総支払額と実質月額（総額÷月数）を計算します。DTI光とGMOとくとくBB光の公式確認条件のプリセット付き。">
+<link rel="stylesheet" href="../style.css">
+<meta property="og:title" content="実質月額シミュレーター｜固定費ラボ">
+<meta property="og:description" content="光回線の月額・工事費・割引・キャッシュバック・解約金から、契約期間の総支払額と実質月額（総額÷月数）を計算します。DTI光とGMOとくとくBB光の公式確認条件のプリセット付き。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://koteihi.globe-ent.com/tools/jitsushitsu-sim.html">
+<meta name="twitter:card" content="summary">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+</head>
+<body>
+<header class="site">
+  <div class="name"><a href="../index.html">固定費ラボ</a></div>
+  <nav class="main">
+    <a href="../articles.html">記事一覧</a>
+    <a href="jitsushitsu-sim.html">計算ツール</a>
+  </nav>
+</header>
+<main>
+  <h1>実質月額シミュレーター</h1>
+  <p>光回線の料金は、月額表示だけでは比べられません。このツールは、工事費・手数料・割引・解約時の費用まで入れた<strong>総支払額</strong>を出し、<strong>実質月額 ＝ 総支払額 ÷ 利用月数</strong>に直します。計算の考え方は<a href="../articles/jitsushitsu-getsugaku.html">こちらの記事</a>で解説しています。</p>
+
+  <h2>プリセット（公式確認した条件）</h2>
+  <p>新規・派遣工事あり・1ギガファミリーの条件です（2026年11月9日確認）。数値は入力欄に反映されるので、そのまま計算できます。</p>
+  <p>
+    <button type="button" class="calc" style="width:auto;padding:10px 16px;margin-top:0" onclick="preset('dti')">DTI光 ファミリー（新規）</button>
+    <button type="button" class="calc" style="width:auto;padding:10px 16px;margin-top:0" onclick="preset('gmo')">GMOとくとくBB光 ファミリー（新規）</button>
+  </p>
+  <p class="src">プリセットの根拠：DTI光 公式サイト・重要事項説明書、GMOとくとくBB光 公式サイト料金プランページ（いずれも2026年11月9日確認）。GMOとくとくBB光のキャッシュバックは申込経路で条件が変わるため、プリセットでは0円にしています。両社の総額比較は<a href="../articles/gmo-dti-hikaku.html">比較記事</a>にあります。</p>
+
+  <label>月額料金（円）
+    <input type="number" id="monthly" inputmode="numeric" placeholder="例：5280">
+  </label>
+  <label>利用月数（何か月使うか）
+    <input type="number" id="months" inputmode="numeric" placeholder="例：24">
+  </label>
+  <label>契約事務手数料（円）
+    <input type="number" id="fee" inputmode="numeric" placeholder="例：3300">
+  </label>
+  <label>工事費の総額（円）
+    <input type="number" id="constCost" inputmode="numeric" placeholder="例：26400">
+  </label>
+  <label>工事費の割引が完了する月数（分割回数。割引がない・一括払いの場合は0）
+    <input type="number" id="constMonths" inputmode="numeric" placeholder="例：24（DTI光）／36（GMOとくとくBB光）">
+  </label>
+  <label>月額割引の金額（円／月、任意）
+    <input type="number" id="disc" inputmode="numeric" placeholder="例：440">
+  </label>
+  <label>月額割引の月数（任意）
+    <input type="number" id="discMonths" inputmode="numeric" placeholder="例：12">
+  </label>
+  <label>キャッシュバック（円、任意：条件を満たして受け取れる場合のみ）
+    <input type="number" id="cashback" inputmode="numeric" placeholder="例：5000">
+  </label>
+  <label>解約金・違約金（円、任意：解約時に払う場合）
+    <input type="number" id="penalty" inputmode="numeric" placeholder="例：0">
+  </label>
+  <button class="calc" onclick="calc()">計算する</button>
+
+  <div class="result" id="result">
+    <div>実質月額（総支払額 ÷ 利用月数）</div>
+    <div class="big" id="effective">—</div>
+    <p id="totalLine"></p>
+    <p id="breakdown"></p>
+    <p id="note"></p>
+  </div>
+
+  <h2>計算式と前提</h2>
+  <p>総支払額 ＝ 月額料金 × 利用月数 − 月額割引（割引月数まで）＋ 契約事務手数料 ＋ 工事費の実負担 ＋ 解約金 − キャッシュバック</p>
+  <ul>
+    <li>工事費は「分割払いと同額の月額割引で相殺される」形式を前提にしています。割引が完了する月数まで使えば実負担は0、途中で解約する場合は残り月数分が実負担（一括請求）として残ります。割引のない一括払いの工事費は、全額が実負担です。</li>
+    <li>月額割引は、利用月数が割引月数より短い場合は、利用月数分だけ差し引きます。</li>
+    <li>解約金は、入力した金額をそのまま総額に加えます。更新月に解約するなど解約金がかからない場合は0のままにしてください。</li>
+    <li>キャッシュバックは、受け取り条件を満たせる場合だけ入力してください。申込経路や受取手続きの有無で変わります。</li>
+    <li>税込・税抜が混ざらないよう、公式表示に合わせてすべて税込で入力してください。入力した数値はサーバーに送信されません（ブラウザ内で計算しています）。</li>
+  </ul>
+<div class="share"><span>このページを共有：</span><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fkoteihi.globe-ent.com%2Ftools%2Fjitsushitsu-sim.html&text=%E5%AE%9F%E8%B3%AA%E6%9C%88%E9%A1%8D%E3%82%B7%E3%83%9F%E3%83%A5%E3%83%AC%E3%83%BC%E3%82%BF%E3%83%BC%EF%BD%9C%E5%9B%BA%E5%AE%9A%E8%B2%BB%E3%83%A9%E3%83%9C" target="_blank" rel="noopener">X</a><a href="https://b.hatena.ne.jp/entry/https://koteihi.globe-ent.com/tools/jitsushitsu-sim.html" target="_blank" rel="noopener">はてなブックマークに追加</a><a href="https://social-plugins.line.me/lineit/share?url=https%3A%2F%2Fkoteihi.globe-ent.com%2Ftools%2Fjitsushitsu-sim.html" target="_blank" rel="noopener">LINE</a><a href="https://getpocket.com/edit?url=https%3A%2F%2Fkoteihi.globe-ent.com%2Ftools%2Fjitsushitsu-sim.html" target="_blank" rel="noopener">Pocket</a></div>
+</main>
+<footer class="site">
+  <a href="../about.html">運営者情報・広告方針</a><a href="../privacy.html">プライバシーポリシー</a><a href="../contact.html">お問い合わせ</a>
+  <div class="sister">姉妹メディア：<a href="https://travel.globe-ent.com/">旅ステータスラボ</a>／<a href="https://furusato.globe-ent.com/">限度額ラボ</a></div>
+  <div>© 固定費ラボ</div>
+</footer>
+<script>
+function fmt(n){ return Math.round(n).toLocaleString('ja-JP'); }
+function num(id){ var v = parseFloat(document.getElementById(id).value); return isNaN(v) ? 0 : v; }
+function setv(id, v){ document.getElementById(id).value = v; }
+function preset(kind){
+  if(kind === 'dti'){
+    setv('monthly', 5280); setv('months', 24); setv('fee', 3300);
+    setv('constCost', 26400); setv('constMonths', 24);
+    setv('disc', 440); setv('discMonths', 12);
+    setv('cashback', 0); setv('penalty', 0);
+  } else if(kind === 'gmo'){
+    setv('monthly', 5390); setv('months', 24); setv('fee', 3300);
+    setv('constCost', 26400); setv('constMonths', 36);
+    setv('disc', 0); setv('discMonths', 0);
+    setv('cashback', 0); setv('penalty', 0);
+  }
+  calc();
+}
+function calc(){
+  var monthly = num('monthly');
+  var months = num('months');
+  var fee = num('fee');
+  var constCost = num('constCost');
+  var constMonths = num('constMonths');
+  var disc = num('disc');
+  var discMonths = num('discMonths');
+  var cashback = num('cashback');
+  var penalty = num('penalty');
+  var box = document.getElementById('result');
+  if(monthly <= 0 || months <= 0){ alert('月額料金と利用月数を入力してください。'); return; }
+  var monthlyTotal = monthly * months - disc * Math.min(discMonths, months);
+  var constNet;
+  if(constMonths > 0){
+    constNet = constCost * Math.max(0, constMonths - months) / constMonths;
+  } else {
+    constNet = constCost;
+  }
+  var total = monthlyTotal + fee + constNet + penalty - cashback;
+  var effective = total / months;
+  document.getElementById('effective').textContent = '約 ' + fmt(effective) + ' 円／月';
+  document.getElementById('totalLine').textContent = months + 'か月の総支払額は 約 ' + fmt(total) + ' 円 です。';
+  var b = '内訳：月額料金の合計（割引後）' + fmt(monthlyTotal) + '円';
+  b += ' ＋ 事務手数料 ' + fmt(fee) + '円';
+  b += ' ＋ 工事費の実負担 ' + fmt(constNet) + '円';
+  if(penalty > 0) b += ' ＋ 解約金 ' + fmt(penalty) + '円';
+  if(cashback > 0) b += ' − キャッシュバック ' + fmt(cashback) + '円';
+  document.getElementById('breakdown').textContent = b;
+  var note = '';
+  if(constMonths > 0 && months < constMonths){
+    note = '工事費の割引完了（' + constMonths + 'か月）より前に解約する前提のため、工事費の残り ' + fmt(constNet) + ' 円が実負担として残っています。' + constMonths + 'か月使うとこの負担は0になります。';
+  } else if(constMonths > 0){
+    note = '工事費は割引期間を使い切る前提のため、実負担は0として計算しています。';
+  }
+  document.getElementById('note').textContent = note;
+  box.style.display = 'block';
+}
+</script>
+</body>
+</html>
