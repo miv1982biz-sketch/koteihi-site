@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>記事一覧｜固定費ラボ</title>
+<meta name="description" content="固定費ラボの記事一覧。光回線の条件確認、実質月額の試算、更新月・解約金の確認方法をカテゴリ別に並べています。キーワードで絞り込みもできます。">
+<link rel="stylesheet" href="style.css">
+<meta property="og:title" content="記事一覧｜固定費ラボ">
+<meta property="og:description" content="固定費ラボの記事一覧。光回線の条件確認、実質月額の試算、更新月・解約金の確認方法をカテゴリ別に並べています。キーワードで絞り込みもできます。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://koteihi.globe-ent.com/articles.html">
+<meta name="twitter:card" content="summary">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+</head>
+<body>
+<header class="site">
+  <div class="name"><a href="index.html">固定費ラボ</a></div>
+  <nav class="main">
+    <a href="articles.html">記事一覧</a>
+    <a href="tools/jitsushitsu-sim.html">計算ツール</a>
+  </nav>
+</header>
+<main>
+  <h1>記事一覧</h1>
+  <p>カテゴリ別に並べています。キーワードで絞り込むこともできます。</p>
+  <div class="searchbox">
+    <input type="search" id="q" placeholder="キーワードで記事を探す（例：実質月額、工事費、解約金）" aria-label="記事を検索">
+    <p class="src" id="count"></p>
+  </div>
+
+  <section class="cluster">
+    <h2>費用の試算</h2>
+    <a class="card thumbrow" href="articles/jitsushitsu-getsugaku.html" data-kw="実質月額 総額 工事費 計算式 モデル 逆転 光回線"><span class="txt">
+      <strong>光回線の実質月額の出し方 — 月額表示と総額で順位が逆転する理由</strong>
+      <span>実質月額の計算式と、工事費の割引期間の違いで24か月の総額が逆転するモデル例を実数で示します。</span>
+      <span class="src">費用試算｜2026年11月9日</span></span>
+    </a>
+    <a class="card thumbrow" href="tools/jitsushitsu-sim.html" data-kw="シミュレーター 計算ツール 実質月額 総額 DTI GMO プリセット"><span class="txt">
+      <strong>実質月額シミュレーター</strong>
+      <span>月額・工事費・キャッシュバック・解約金から総額と実質月額を計算します。DTI光とGMOとくとくBB光のプリセット付き。</span>
+      <span class="src">計算ツール｜2026年11月9日</span></span>
+    </a>
+  </section>
+
+  <section class="cluster">
+    <h2>回線の条件比較</h2>
+    <a class="card thumbrow" href="articles/gmo-dti-hikaku.html" data-kw="GMOとくとくBB光 DTI光 比較 月額 工事費 解約金 キャッシュバック ルーター"><span class="txt">
+      <strong>GMOとくとくBB光とDTI光の条件比較 — 実質月額で比べる</strong>
+      <span>両社の公式条件を確認し、24か月・36か月の総額と実質月額、途中解約時の工事費残債を比べました。</span>
+      <span class="src">条件確認・費用試算｜2026年11月9日</span></span>
+    </a>
+  </section>
+
+  <section class="cluster">
+    <h2>解約・更新の確認</h2>
+    <a class="card thumbrow" href="articles/koushin-tsuki-kaiyakukin.html" data-kw="更新月 解約金 違約金 工事費残債 確認方法 契約書面 会員ページ 請求明細"><span class="txt">
+      <strong>更新月と解約金の確認方法 — 解約で払うお金は3種類ある</strong>
+      <span>解約金・工事費の残債・解約月の請求の3つを、どこで確認するかを整理しました。</span>
+      <span class="src">期限・条件確認｜2026年11月9日</span></span>
+    </a>
+  </section>
+
+  <p class="src" id="noresult" style="display:none">該当する記事がありません。キーワードを変えてお試しください。</p>
+</main>
+<footer class="site">
+  <a href="about.html">運営者情報・広告方針</a><a href="privacy.html">プライバシーポリシー</a><a href="contact.html">お問い合わせ</a>
+  <div class="sister">姉妹メディア：<a href="https://travel.globe-ent.com/">旅ステータスラボ</a>／<a href="https://furusato.globe-ent.com/">限度額ラボ</a></div>
+  <div>© 固定費ラボ</div>
+</footer>
+<script>
+(function(){
+  var q = document.getElementById('q');
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.card'));
+  var sections = Array.prototype.slice.call(document.querySelectorAll('.cluster'));
+  var count = document.getElementById('count');
+  var noresult = document.getElementById('noresult');
+  function apply(){
+    var words = q.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    var visible = 0;
+    cards.forEach(function(c){
+      var text = (c.textContent + ' ' + (c.getAttribute('data-kw')||'')).toLowerCase();
+      var hit = words.every(function(w){ return text.indexOf(w) !== -1; });
+      c.style.display = hit ? '' : 'none';
+      if (hit) visible++;
+    });
+    sections.forEach(function(s){
+      var any = Array.prototype.some.call(s.querySelectorAll('.card'), function(c){ return c.style.display !== 'none'; });
+      s.style.display = any ? '' : 'none';
+    });
+    count.textContent = words.length ? visible + ' 件の記事が見つかりました' : '全 ' + cards.length + ' 記事';
+    noresult.style.display = visible ? 'none' : '';
+  }
+  q.addEventListener('input', apply);
+  apply();
+})();
+</script>
+</body>
+</html>
