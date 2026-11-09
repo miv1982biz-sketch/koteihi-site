@@ -5,12 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>実質月額シミュレーター｜固定費ラボ</title>
 <meta name="description" content="光回線の月額・工事費・割引・キャッシュバック・解約金から、契約期間の総支払額と実質月額（総額÷月数）を計算します。DTI光とGMOとくとくBB光の公式確認条件のプリセット付き。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../style.css">
 <meta property="og:title" content="実質月額シミュレーター｜固定費ラボ">
 <meta property="og:description" content="光回線の月額・工事費・割引・キャッシュバック・解約金から、契約期間の総支払額と実質月額（総額÷月数）を計算します。DTI光とGMOとくとくBB光の公式確認条件のプリセット付き。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://koteihi.globe-ent.com/tools/jitsushitsu-sim.html">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://koteihi.globe-ent.com/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://koteihi.globe-ent.com/ogp.png">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 </head>
 <body>
@@ -24,6 +29,7 @@
 <main>
   <h1>実質月額シミュレーター</h1>
   <p>光回線の料金は、月額表示だけでは比べられません。このツールは、工事費・手数料・割引・解約時の費用まで入れた<strong>総支払額</strong>を出し、<strong>実質月額 ＝ 総支払額 ÷ 利用月数</strong>に直します。計算の考え方は<a href="../articles/jitsushitsu-getsugaku.html">こちらの記事</a>で解説しています。</p>
+  <p class="dateline">公開日：2026年11月9日｜最終更新日：2026年11月9日｜情報確認日：2026年11月9日（プリセット条件の確認日）</p>
 
   <h2>プリセット（公式確認した条件）</h2>
   <p>新規・派遣工事あり・1ギガファミリーの条件です（2026年11月9日確認）。数値は入力欄に反映されるので、そのまま計算できます。</p>
@@ -63,7 +69,7 @@
   <button class="calc" onclick="calc()">計算する</button>
 
   <div class="result" id="result">
-    <div>実質月額（総支払額 ÷ 利用月数）</div>
+    <div><span class="badge">実質月額</span>（総支払額 ÷ 利用月数）</div>
     <div class="big" id="effective">—</div>
     <p id="totalLine"></p>
     <p id="breakdown"></p>
