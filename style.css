@@ -116,6 +116,17 @@ a.thumbrow:hover .t { text-decoration:underline; }
 .adbox{border:2px solid var(--line-dark);padding:16px;margin:24px 0;text-align:center;background:var(--row)}
 .adbox .src{text-align:left}
 .adbox img{max-width:100%;height:auto}
+/* 商品棚（カード形式の広告枠） */
+.shelfbox{border:2px solid var(--line-dark);padding:16px;margin:24px 0;background:var(--row)}
+.shelfbox .src{text-align:left}
+.shelf{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:12px 0 4px}
+@media (max-width:640px){.shelf{grid-template-columns:1fr}}
+.prod{border:1px solid var(--line-dark);background:var(--row);display:flex;flex-direction:column}
+.prod .pimg{width:100%;display:block}
+.prod .pb{padding:12px 14px 14px;display:flex;flex-direction:column;gap:8px;flex:1}
+.prod .pn{font-weight:700;font-size:16px;color:var(--ink)}
+.prod ul{margin:0;padding-left:1.25em;font-size:13.5px;color:var(--sub);line-height:1.8}
+.prod .cta{margin-top:auto;display:block;text-align:center;background:var(--ink);color:#fff;font-weight:700;font-size:14px;line-height:1.6;padding:10px 12px;text-decoration:none}
 
 .share{margin:28px 0 8px;padding:12px 0;border-top:1px solid var(--line);font-size:14px}
 .share a{margin-right:14px}
