@@ -44,7 +44,7 @@ strong { color:var(--ink); }
 .srow .sv { font-family:"IBM Plex Mono", "Zen Kaku Gothic New", monospace; font-size:19px; font-weight:700; text-align:right; white-space:nowrap; }
 .badge { display:inline-block; background:var(--marker); color:#fff; font-family:"Zen Kaku Gothic New", sans-serif; font-size:11.5px; font-weight:700; padding:2px 8px; margin-right:8px; vertical-align:3px; letter-spacing:.04em; }
 figure { margin:18px 0; }
-figure img { width:100%; display:block; }
+figure img { width:100%; height:auto; display:block; }
 figcaption { font-size:12.5px; color:var(--sub); border:1px solid var(--line); border-top:none; padding:7px 11px; background:var(--row); }
 .sheet + figcaption, .figcap { font-size:12.5px; color:var(--sub); padding:7px 2px; }
 
